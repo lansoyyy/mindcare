@@ -92,7 +92,7 @@ class DashboardTab extends StatelessWidget {
                                           ),
                                           TextWidget(
                                             text:
-                                                'Disease: Headache and Diarrhea',
+                                                'Disease: Headache and Stress',
                                             fontSize: 12,
                                             fontFamily: 'Regular',
                                           ),
