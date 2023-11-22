@@ -16,12 +16,19 @@ class NotificationsTab extends StatelessWidget {
             child: Column(
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     TextWidget(
-                      text: 'History',
+                      text: 'Notifications',
                       fontSize: 24,
                       fontFamily: 'Bold',
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.warning,
+                      ),
+                      color: Colors.red,
                     ),
                   ],
                 ),
@@ -33,49 +40,13 @@ class NotificationsTab extends StatelessWidget {
                   child: ListView.builder(
                     itemBuilder: (context, index) {
                       return Card(
-                        child: SizedBox(
-                          height: 150,
-                          width: 400,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                'assets/images/doc1.png',
-                                height: 100,
-                              ),
-                              const SizedBox(
-                                width: 30,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  TextWidget(
-                                    text: 'Dr. John Rivera',
-                                    fontSize: 14,
-                                    fontFamily: 'Bold',
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  TextWidget(
-                                    text: 'Messaging',
-                                    fontSize: 12,
-                                    fontFamily: 'Regular',
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  TextWidget(
-                                    text: 'October 25, 2023 at 5:30pm',
-                                    fontSize: 12,
-                                    fontFamily: 'Medium',
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                        child: ListTile(
+                          leading: const Icon(Icons.notifications),
+                          title: TextWidget(
+                              text: 'Title of Notification', fontSize: 14),
+                          subtitle: TextWidget(text: 'John Doe', fontSize: 12),
+                          trailing:
+                              TextWidget(text: '11/22/2023', fontSize: 10),
                         ),
                       );
                     },
