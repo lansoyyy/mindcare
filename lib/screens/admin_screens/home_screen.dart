@@ -4,6 +4,8 @@ import 'package:medzone/screens/admin_screens/nurse_tab.dart';
 import 'package:medzone/screens/admin_screens/patients_tab.dart';
 import 'package:medzone/screens/admin_screens/profile_tab.dart';
 
+import '../../utils/colors.dart';
+
 class AdminHomeScreen extends StatefulWidget {
   const AdminHomeScreen({super.key});
 
@@ -30,6 +32,17 @@ class _AdminHomeScreenState extends State<AdminHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: primary,
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          // Navigator.of(context).push(
+          //     MaterialPageRoute(builder: (context) => const SignupScreen()));
+        },
+      ),
       body: children[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         selectedLabelStyle: const TextStyle(fontFamily: 'Bold'),

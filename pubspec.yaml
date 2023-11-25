@@ -39,6 +39,13 @@ dependencies:
   intl:
   calendar_view:
   table_calendar:
+  firebase_core:
+  cloud_firestore:
+  firebase_storage:
+  firebase_auth:
+  get_storage:
+  image_picker:
+  rename:
 
 dev_dependencies:
   flutter_test:
