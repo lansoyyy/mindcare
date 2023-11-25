@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:medzone/screens/admin_screens/home_screen.dart';
+import 'package:medzone/screens/auth/signup_screen.dart';
 import 'package:medzone/screens/home_screen.dart';
+import 'package:medzone/screens/home_tab.dart';
 import 'package:medzone/utils/colors.dart';
 import 'package:medzone/widgets/button_widget.dart';
 import 'package:medzone/widgets/text_widget.dart';
@@ -26,10 +27,9 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TextWidget(
-                  text: 'MindCare',
-                  fontSize: 45,
-                  fontFamily: 'Bold',
+                Image.asset(
+                  'assets/images/brand.png',
+                  width: 150,
                 ),
                 const SizedBox(
                   height: 20,
@@ -193,40 +193,34 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: ButtonWidget(
                     label: 'Sign In',
                     onPressed: () {
-                      if (emailController.text == 'admin@mindcare.com' &&
-                          passwordController.text == 'admin123') {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const AdminHomeScreen()));
-                      } else {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const HomeScreen()));
-                      }
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => const HomeScreen()));
                     },
                   ),
                 ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     TextWidget(
-                //       text: "Don't have an account?",
-                //       fontSize: 12,
-                //       fontFamily: 'Regular',
-                //       color: Colors.black,
-                //     ),
-                //     TextButton(
-                //       onPressed: () {
-                //         Navigator.of(context).push(MaterialPageRoute(
-                //             builder: (context) => const SignupScreen()));
-                //       },
-                //       child: TextWidget(
-                //         text: 'Signup here',
-                //         fontSize: 14,
-                //         fontFamily: 'Medium',
-                //         color: primary,
-                //       ),
-                //     ),
-                //   ],
-                // ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextWidget(
+                      text: "Don't have an account?",
+                      fontSize: 12,
+                      fontFamily: 'Regular',
+                      color: Colors.black,
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const SignupScreen()));
+                      },
+                      child: TextWidget(
+                        text: 'Signup here',
+                        fontSize: 14,
+                        fontFamily: 'Medium',
+                        color: primary,
+                      ),
+                    ),
+                  ],
+                ),
                 const SizedBox(
                   height: 50,
                 ),
