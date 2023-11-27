@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medzone/screens/admin_screens/edit_profile_tab.dart';
 import 'package:medzone/screens/auth/login_screen.dart';
 import 'package:medzone/screens/edit_profile_tab.dart';
 import 'package:medzone/widgets/text_widget.dart';
@@ -41,12 +42,12 @@ class AdminProfileTab extends StatelessWidget {
                       height: 10,
                     ),
                     TextWidget(
-                      text: 'Juan Dela Cruz',
+                      text: 'Administrator',
                       fontSize: 18,
                       fontFamily: 'Bold',
                     ),
                     TextWidget(
-                      text: 'juandelacruz@gmail.com',
+                      text: 'admin@mindcare.com',
                       fontSize: 14,
                       fontFamily: 'Bold',
                     ),
@@ -54,24 +55,7 @@ class AdminProfileTab extends StatelessWidget {
                       height: 10,
                     ),
                     const Divider(),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 50, right: 20),
-                      child: ListTile(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const EditProfileTab()));
-                        },
-                        leading: const Icon(Icons.person),
-                        title: TextWidget(
-                          text: 'Edit Profile',
-                          fontSize: 18,
-                          fontFamily: 'Medium',
-                        ),
-                      ),
-                    ),
+                    
                     const SizedBox(
                       height: 10,
                     ),

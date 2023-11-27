@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medzone/screens/admin_screens/home_screen.dart';
 import 'package:medzone/screens/home_screen.dart';
 import 'package:medzone/widgets/button_widget.dart';
 import 'package:medzone/widgets/text_widget.dart';
@@ -112,7 +113,7 @@ class _AdminEditProfileTabState extends State<AdminEditProfileTab> {
                       onPressed: () {
                         showToast('Profile updated!');
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const HomeScreen()));
+                            builder: (context) => const AdminHomeScreen()));
                       },
                     ),
                   ],
