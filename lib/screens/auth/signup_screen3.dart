@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:medzone/screens/admin_screens/home_screen.dart';
 import 'package:medzone/screens/auth/login_screen.dart';
+import 'package:medzone/services/add_patient.dart';
 import 'package:medzone/utils/colors.dart';
 import 'package:medzone/widgets/button_widget.dart';
 import 'package:medzone/widgets/text_widget.dart';
 import 'package:medzone/widgets/textfield_widget.dart';
+import 'package:medzone/widgets/toast_widget.dart';
 
 class SignupScreen3 extends StatefulWidget {
   var firstnameController = TextEditingController();
@@ -13,12 +16,14 @@ class SignupScreen3 extends StatefulWidget {
   var nicknameController = TextEditingController();
   var suffixController = TextEditingController();
   var dateController = TextEditingController();
+    var descController = TextEditingController();
 
   String selectedSex = 'Male';
   String selectedGender = 'Male';
 
   SignupScreen3(
       {super.key,
+      required this.descController,
       required this.firstnameController,
       required this.middlenameController,
       required this.lastnameController,
@@ -117,6 +122,17 @@ class _SignupScreen3State extends State<SignupScreen3> {
                     controller: widget.nicknameController,
                   ),
                 ),
+                 const SizedBox(
+                  height: 10,
+                ),
+                Center(
+                  child: TextFieldWidget(
+                    isEnabled: false,
+                    label: 'Description of illness/problem',
+                    hintColor: Colors.black,
+                    controller: widget.descController,
+                  ),
+                ),
                 const SizedBox(
                   height: 10,
                 ),
@@ -139,7 +155,7 @@ class _SignupScreen3State extends State<SignupScreen3> {
                         text: const TextSpan(
                           children: [
                             TextSpan(
-                              text: 'Birthday',
+                              text: 'Date of medicine intake',
                               style: TextStyle(
                                 fontSize: 14,
                                 fontFamily: 'Bold',
@@ -309,10 +325,12 @@ class _SignupScreen3State extends State<SignupScreen3> {
                 ),
                 Center(
                   child: ButtonWidget(
-                    label: 'Signup',
+                    label: 'Add Patient',
                     onPressed: () {
+                      addPatient(widget.firstnameController.text, widget.middlenameController.text, widget.lastnameController.text, widget.nicknameController.text, widget.suffixController.text, widget.dateController.text, widget.selectedSex, widget.selectedGender, widget.descController.text);
+                      showToast('Patient added!');
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => const LoginScreen()));
+                          builder: (context) => const AdminHomeScreen()));
                     },
                   ),
                 ),

@@ -23,6 +23,11 @@ class _SignupScreen2State extends State<SignupScreen2> {
 
   String selectedSex = 'Male'; // Default selected sex
   String selectedGender = 'Male'; // Default selected gender
+    final descController = TextEditingController();
+  
+
+
+
 
   final List<String> sexList = ['Male', 'Female', 'Other'];
   final List<String> genderList = ['Male', 'Female', 'Non-binary', 'Other'];
@@ -109,6 +114,16 @@ class _SignupScreen2State extends State<SignupScreen2> {
                 ),
                 Center(
                   child: TextFieldWidget(
+                    label: 'Description of illness/problem',
+                    hintColor: Colors.black,
+                    controller: descController,
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Center(
+                  child: TextFieldWidget(
                     label: 'Suffix (Jr., I, II, III, Sr.)',
                     hintColor: Colors.black,
                     controller: suffixController,
@@ -125,7 +140,7 @@ class _SignupScreen2State extends State<SignupScreen2> {
                         text: const TextSpan(
                           children: [
                             TextSpan(
-                              text: 'Birthday',
+                              text: 'Date of medicine intake',
                               style: TextStyle(
                                 fontSize: 14,
                                 fontFamily: 'Bold',
@@ -288,6 +303,7 @@ class _SignupScreen2State extends State<SignupScreen2> {
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => SignupScreen3(
+                            descController: descController,
                               firstnameController: firstnameController,
                               middlenameController: middlenameController,
                               lastnameController: lastnameController,

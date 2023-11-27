@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-Future addNurse(fname, mname, lname, nname, suffix, bday,sex, gender, email) async {
-  final docUser = FirebaseFirestore.instance.collection('Nurse').doc();
+Future addPatient
+(fname, mname, lname, nname, suffix, medsched,sex, gender, desc) async {
+  final docUser = FirebaseFirestore.instance.collection('Patients').doc();
 
   final json = {
     'fname': fname,
@@ -10,13 +11,11 @@ Future addNurse(fname, mname, lname, nname, suffix, bday,sex, gender, email) asy
         'lname': lname,
           'nname': nname,
             'suffix': suffix,
-              'bday': bday,
+              'bday': medsched,
                 'sex': sex,
                   'gender': gender,
-                    'email': email,
-                    'year': bday.toString().split('-')[0],
-                     'month': bday.toString().split('-')[1],
-                      'day': bday.toString().split('-')[2],
+                    'isAssigned': false,
+                    'desc': desc,
    
     'dateTime': DateTime.now(),
     'status': 'Pending',
