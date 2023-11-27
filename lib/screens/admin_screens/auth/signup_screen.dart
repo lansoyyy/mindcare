@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:medzone/screens/admin_screens/auth/signup_screen2.dart';
 import 'package:medzone/screens/auth/signup_screen2.dart';
 import 'package:medzone/widgets/button_widget.dart';
 import 'package:medzone/widgets/text_widget.dart';
 import 'package:medzone/widgets/textfield_widget.dart';
+import 'package:medzone/widgets/toast_widget.dart';
 
-class SignupScreen extends StatefulWidget {
-  const SignupScreen({super.key});
+class AdminSignupScreen extends StatefulWidget {
+  const AdminSignupScreen({super.key});
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  State<AdminSignupScreen> createState() => _AdminSignupScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _AdminSignupScreenState extends State<AdminSignupScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmpasswordController = TextEditingController();
@@ -105,8 +107,12 @@ class _SignupScreenState extends State<SignupScreen> {
                   child: ButtonWidget(
                     label: 'Next',
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const SignupScreen2()));
+                     if(passwordController.text != confirmpasswordController.text) {
+                      showToast('Password do not match!');
+                     } else {
+                       Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => AdminSignupScreen2(emaill: emailController.text, password: passwordController.text)));
+                     }
                     },
                   ),
                 ),

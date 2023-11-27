@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:medzone/screens/admin_screens/auth/signup_screen.dart';
 import 'package:medzone/screens/auth/signup_screen.dart';
 import 'package:medzone/utils/colors.dart';
 
@@ -27,7 +29,8 @@ class _AdminNurseTabState extends State<AdminNurseTab> {
         ),
         onPressed: () {
           Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => const SignupScreen()));
+              MaterialPageRoute(builder: (context) => const AdminSignupScreen()));
+            
         },
       ),
       body: Padding(
@@ -48,72 +51,125 @@ class _AdminNurseTabState extends State<AdminNurseTab> {
               const SizedBox(
                 height: 20,
               ),
-              Expanded(
-                child: SizedBox(
-                  child: ListView.builder(
-                      itemCount: 50,
-                      itemBuilder: ((context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 5, bottom: 5),
-                          child: ListTile(
-                            onTap: () async {
-                              // await FirebaseFirestore.instance
-                              //     .collection('Messages')
-                              //     .doc(data.docs[index].id)
-                              //     .update({'seen': true});
-                              // Navigator.of(context).push(MaterialPageRoute(
-                              //     builder: (context) => ChatPage(
-                              //           userId: data.docs[index]['userId'],
-                              //           userName: data.docs[index]
-                              //                   ['userName'] ??
-                              //               'User name',
-                              //         )));
-                            },
-                            leading: const CircleAvatar(
-                              maxRadius: 25,
-                              minRadius: 25,
-                              backgroundImage: NetworkImage(''),
-                              child: Icon(
-                                Icons.person,
-                                color: Colors.black,
-                                size: 35,
-                              ),
-                            ),
-                            subtitle: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                TextWidget(
-                                    text: 'John Doe',
-                                    fontSize: 15,
-                                    fontFamily: 'Bold',
-                                    color: Colors.black),
-                                const Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      '2 patients',
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w800,
-                                          fontSize: 12,
+              StreamBuilder<QuerySnapshot>(
+                                stream: FirebaseFirestore.instance
+                                    .collection('Nurse')
+                                  
+                                    .snapshots(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  if (snapshot.hasError) {
+                                    print(snapshot.error);
+                                    return const Center(child: Text('Error'));
+                                  }
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return const Padding(
+                                      padding: EdgeInsets.only(top: 50),
+                                      child: Center(
+                                        child: CircularProgressIndicator(
                                           color: Colors.black,
-                                          fontFamily: 'QBold'),
+                                        ),
+                                      ),
+                                    );
+                                  }
+
+                                  final data = snapshot.requireData;
+                  return Expanded(
+                    child: SizedBox(
+                      child: ListView.builder(
+                          itemCount: data.docs.length,
+                          itemBuilder: ((context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(top: 5, bottom: 5),
+                              child: ListTile(
+                                onTap: () async {
+                                  // await FirebaseFirestore.instance
+                                  //     .collection('Messages')
+                                  //     .doc(data.docs[index].id)
+                                  //     .update({'seen': true});
+                                  // Navigator.of(context).push(MaterialPageRoute(
+                                  //     builder: (context) => ChatPage(
+                                  //           userId: data.docs[index]['userId'],
+                                  //           userName: data.docs[index]
+                                  //                   ['userName'] ??
+                                  //               'User name',
+                                  //         )));
+                                },
+                                leading: const CircleAvatar(
+                                  maxRadius: 25,
+                                  minRadius: 25,
+                                  backgroundImage: NetworkImage(''),
+                                  child: Icon(
+                                    Icons.person,
+                                    color: Colors.black,
+                                    size: 35,
+                                  ),
+                                ),
+                                subtitle: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    TextWidget(
+                                        text: '${data.docs[index]['fname']} ${data.docs[index]['mname'][0].toString().toUpperCase()}. ${data.docs[index]['lname']}',
+                                        fontSize: 15,
+                                        fontFamily: 'Bold',
+                                        color: Colors.black),
+                                     Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                      StreamBuilder<QuerySnapshot>(
+                                stream: FirebaseFirestore.instance
+                                    .collection('Patients')
+                                    .where('nurseId', isEqualTo: data.docs[index].id)
+                                  
+                                    .snapshots(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  if (snapshot.hasError) {
+                                    print(snapshot.error);
+                                    return const Center(child: Text('Error'));
+                                  }
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return const Padding(
+                                      padding: EdgeInsets.only(top: 50),
+                                      child: Center(
+                                        child: CircularProgressIndicator(
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    );
+                                  }
+
+                                  final patientData = snapshot.requireData;
+                                            return Text(
+                                              patientData.docs.length.toString(),
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w800,
+                                                  fontSize: 12,
+                                                  color: Colors.black,
+                                                  fontFamily: 'QBold'),
+                                            );
+                                          }
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
-                              ],
-                            ),
-                            trailing: const Icon(
-                              Icons.arrow_right,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        );
-                      })),
-                ),
+                                trailing: const Icon(
+                                  Icons.arrow_right,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            );
+                          })),
+                    ),
+                  );
+                }
               )
             ],
           ),

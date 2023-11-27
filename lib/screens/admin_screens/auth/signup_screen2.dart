@@ -1,19 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:medzone/screens/admin_screens/auth/signup_screen3.dart';
 import 'package:medzone/screens/auth/signup_screen3.dart';
 import 'package:medzone/utils/colors.dart';
 import 'package:medzone/widgets/button_widget.dart';
 import 'package:medzone/widgets/text_widget.dart';
 import 'package:medzone/widgets/textfield_widget.dart';
 
-class SignupScreen2 extends StatefulWidget {
-  const SignupScreen2({super.key});
+class AdminSignupScreen2 extends StatefulWidget {
+
+
+String emaill;
+String password;
+
+AdminSignupScreen2({
+  required this.emaill,
+  required this.password
+});
 
   @override
-  State<SignupScreen2> createState() => _SignupScreen2State();
+  State<AdminSignupScreen2> createState() => _AdminSignupScreen2State();
 }
 
-class _SignupScreen2State extends State<SignupScreen2> {
+class _AdminSignupScreen2State extends State<AdminSignupScreen2> {
   final firstnameController = TextEditingController();
   final middlenameController = TextEditingController();
   final lastnameController = TextEditingController();
@@ -287,15 +296,13 @@ class _SignupScreen2State extends State<SignupScreen2> {
                     label: 'Next',
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => SignupScreen3(
-                              firstnameController: firstnameController,
-                              middlenameController: middlenameController,
-                              lastnameController: lastnameController,
-                              nicknameController: nicknameController,
-                              suffixController: suffixController,
-                              dateController: dateController,
-                              selectedSex: selectedSex,
-                              selectedGender: selectedGender)));
+                          builder: (context) => AdminSignupScreen3(
+                            email: widget.emaill,
+                            password: widget.password,
+
+                            
+                            firstnameController: firstnameController, middlenameController: middlenameController, lastnameController: lastnameController, nicknameController: nicknameController, suffixController: suffixController, dateController: dateController, selectedSex: selectedSex, selectedGender: selectedGender,
+                          )));
                     },
                   ),
                 ),

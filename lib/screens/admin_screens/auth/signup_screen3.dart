@@ -1,24 +1,35 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:medzone/screens/auth/login_screen.dart';
+import 'package:medzone/screens/admin_screens/home_screen.dart';
+import 'package:medzone/services/add_nurse.dart';
+
 import 'package:medzone/utils/colors.dart';
 import 'package:medzone/widgets/button_widget.dart';
 import 'package:medzone/widgets/text_widget.dart';
 import 'package:medzone/widgets/textfield_widget.dart';
+import 'package:medzone/widgets/toast_widget.dart';
 
-class SignupScreen3 extends StatefulWidget {
+class AdminSignupScreen3 extends StatefulWidget {
+
+
+  
   var firstnameController = TextEditingController();
   var middlenameController = TextEditingController();
   var lastnameController = TextEditingController();
   var nicknameController = TextEditingController();
   var suffixController = TextEditingController();
   var dateController = TextEditingController();
+  String email;
+  String password;
 
   String selectedSex = 'Male';
   String selectedGender = 'Male';
 
-  SignupScreen3(
+  AdminSignupScreen3(
       {super.key,
+      required this.email,
+      required this.password,
       required this.firstnameController,
       required this.middlenameController,
       required this.lastnameController,
@@ -29,10 +40,10 @@ class SignupScreen3 extends StatefulWidget {
       required this.selectedGender});
 
   @override
-  State<SignupScreen3> createState() => _SignupScreen3State();
+  State<AdminSignupScreen3> createState() => _AdminSignupScreen3State();
 }
 
-class _SignupScreen3State extends State<SignupScreen3> {
+class _AdminSignupScreen3State extends State<AdminSignupScreen3> {
   final List<String> sexList = ['Male', 'Female', 'Other'];
   final List<String> genderList = ['Male', 'Female', 'Non-binary', 'Other'];
 
@@ -311,8 +322,7 @@ class _SignupScreen3State extends State<SignupScreen3> {
                   child: ButtonWidget(
                     label: 'Signup',
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => const LoginScreen()));
+                   register(context);
                     },
                   ),
                 ),
@@ -354,6 +364,33 @@ class _SignupScreen3State extends State<SignupScreen3> {
       });
     } else {
       return null;
+    }
+  }
+
+
+  register(context) async {
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: widget.email, password: widget.password);
+
+      addNurse(widget.firstnameController.text, widget.middlenameController.text, widget.lastnameController.text, widget.nicknameController.text, widget.suffixController.text, widget.dateController.text, widget.selectedSex, widget.selectedGender, widget.email);
+      
+
+      showToast('Account created succesfully!');
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const AdminHomeScreen()));
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        showToast('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        showToast('The account already exists for that email.');
+      } else if (e.code == 'invalid-email') {
+        showToast('The email address is not valid.');
+      } else {
+        showToast(e.toString());
+      }
+    } on Exception catch (e) {
+      showToast("An error occurred: $e");
     }
   }
 }
