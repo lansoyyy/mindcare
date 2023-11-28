@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medzone/widgets/text_widget.dart';
 
@@ -35,22 +37,51 @@ class NotificationsTab extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                SizedBox(
-                  height: 500,
-                  child: ListView.builder(
-                    itemBuilder: (context, index) {
-                      return Card(
-                        child: ListTile(
-                          leading: const Icon(Icons.notifications),
-                          title: TextWidget(
-                              text: 'Title of Notification', fontSize: 14),
-                          subtitle: TextWidget(text: 'John Doe', fontSize: 12),
-                          trailing:
-                              TextWidget(text: '11/22/2023', fontSize: 10),
-                        ),
-                      );
-                    },
-                  ),
+                 StreamBuilder<QuerySnapshot>(
+                                stream:   FirebaseFirestore.instance
+                                    .collection('Patients')
+                                    .where('nurseId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+                                   .orderBy('dateTime', descending: true)
+                                  
+                                    .snapshots(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  if (snapshot.hasError) {
+                                    print(snapshot.error);
+                                    return const Center(child: Text('Error'));
+                                  }
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return const Padding(
+                                      padding: EdgeInsets.only(top: 50),
+                                      child: Center(
+                                        child: CircularProgressIndicator(
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    );
+                                  }
+
+                                  final data = snapshot.requireData;
+                    return SizedBox(
+                      height: 500,
+                      child: ListView.builder(
+                        itemCount: data.docs.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            child: ListTile(
+                              leading: const Icon(Icons.notifications),
+                              title: TextWidget(
+                                  text: data.docs[index]['desc'], fontSize: 14),
+                              subtitle: TextWidget(text: data.docs[index]['fname'] + ' ' + data.docs[index]['lname'], fontSize: 12),
+                              trailing:
+                                  TextWidget(text: data.docs[index]['bday'], fontSize: 10),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  }
                 ),
               ],
             ),

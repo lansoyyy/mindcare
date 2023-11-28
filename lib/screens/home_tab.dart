@@ -65,7 +65,7 @@ class _HomeTabState extends State<HomeTab> {
             StreamBuilder<QuerySnapshot>(
                                 stream:   FirebaseFirestore.instance
                                     .collection('Patients')
-                                    // .where('nurseId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+                                    .where('nurseId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
                                    .orderBy('dateTime', descending: true)
                                   
                                     .snapshots(),
