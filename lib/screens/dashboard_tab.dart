@@ -1,5 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:medzone/utils/colors.dart';
 import 'package:medzone/widgets/text_widget.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -50,70 +51,107 @@ class DashboardTab extends StatelessWidget {
                           ],
                         ),
                       ),
-                      SizedBox(
-                        height: 300,
-                        child: ListView.builder(
-                          itemBuilder: (context, index) {
-                            return Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 10, bottom: 10, right: 25, left: 25),
-                                child: Container(
-                                  height: 150,
-                                  width: 125,
-                                  decoration: BoxDecoration(
-                                    color: primary.withOpacity(0.25),
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        'assets/images/doc1.png',
-                                        height: 100,
+                       StreamBuilder<QuerySnapshot>(
+                                stream:   FirebaseFirestore.instance
+                                    .collection('Patients')
+                                    .where('nurseId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+                                    .where('day', isEqualTo: selectedDay.day.toString())
+                                      .where('month', isEqualTo: selectedDay.month.toString())
+                                        .where('year', isEqualTo: selectedDay.year.toString())
+                                  
+                                    .snapshots(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  if (snapshot.hasError) {
+                                    print(snapshot.error);
+                                    return const Center(child: Text('Error'));
+                                  }
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return const Padding(
+                                      padding: EdgeInsets.only(top: 50),
+                                      child: Center(
+                                        child: CircularProgressIndicator(
+                                          color: Colors.black,
+                                        ),
                                       ),
-                                      const SizedBox(
-                                        width: 30,
+                                    );
+                                  }
+
+                                  final data = snapshot.requireData;
+                          return SizedBox(
+                            height: 300,
+                            child: ListView.builder(
+                              itemCount: data.docs.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 10, bottom: 10, right: 25, left: 25),
+                                    child: Container(
+                                      height: 150,
+                                      width: 125,
+                                      decoration: BoxDecoration(
+                                        color: primary.withOpacity(0.25),
+                                        borderRadius: BorderRadius.circular(15),
                                       ),
-                                      Column(
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
                                         crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                            CrossAxisAlignment.center,
                                         children: [
-                                          TextWidget(
-                                            text: 'John Doe',
-                                            fontSize: 14,
-                                            fontFamily: 'Bold',
-                                          ),
+                                          Icon(Icons.account_box,
+                                        size: 75,),
                                           const SizedBox(
-                                            height: 5,
+                                            width: 30,
                                           ),
-                                          TextWidget(
-                                            text:
-                                                'Disease: Headache and Stress',
-                                            fontSize: 12,
-                                            fontFamily: 'Regular',
-                                          ),
-                                          const SizedBox(
-                                            height: 5,
-                                          ),
-                                          TextWidget(
-                                            text: 'October 25, 2023 at 5:30pm',
-                                            fontSize: 12,
-                                            fontFamily: 'Medium',
-                                          ),
-                                          const SizedBox(
-                                            height: 10,
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              TextWidget(
+                                                text: '${data.docs[index]['fname']} ${data.docs[index]['mname'][0].toString().toUpperCase()}. ${data.docs[index]['lname']}',
+                                                fontSize: 14,
+                                                fontFamily: 'Bold',
+                                              ),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              TextWidget(
+                                                text:
+                                                    'Description: ${data.docs[index]['desc']}',
+                                                fontSize: 12,
+                                                fontFamily: 'Regular',
+                                              ),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              TextWidget(
+                                                text: '${data.docs[index]['bday']}',
+                                                fontSize: 12,
+                                                fontFamily: 'Medium',
+                                              ),
+                                              const SizedBox(
+                                                height: 5,
+                                              ),
+                                              TextWidget(
+                                                text: 'Status: ${data.docs[index]['isAssigned'] ? 'Assigned' : 'Not Assigned'}',
+                                                fontSize: 12,
+                                                fontFamily: 'Medium',
+                                              ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
-                                    ],
-                                  ),
-                                ));
-                          },
-                        ),
+                                    ));
+                              },
+                            ),
+                          );
+                        }
                       ),
                     ],
                   );

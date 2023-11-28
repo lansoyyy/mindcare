@@ -293,7 +293,8 @@ class _AdminPatientsTabState extends State<AdminPatientsTab> {
                                                                                               ),
                                                                                               trailing: TextButton(onPressed: () async {
                                                                                                  await FirebaseFirestore.instance.collection('Patients').doc(data.docs[index].id).update({
-                                                            'isAssigned': true
+                                                            'isAssigned': true,
+                                                            'nurseId': nursedata.docs[index].id
                                                           });
 
                                                           Navigator.pop(context);

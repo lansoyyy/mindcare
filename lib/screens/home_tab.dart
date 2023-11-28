@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medzone/screens/doctor_profile_screen.dart';
 import 'package:medzone/utils/colors.dart';
@@ -60,67 +62,92 @@ class _HomeTabState extends State<HomeTab> {
               const SizedBox(
                 height: 20,
               ),
-              Expanded(
-                child: ListView.builder(
-                  itemBuilder: (context, index) {
-                    return Padding(
-                        padding: const EdgeInsets.only(
-                            top: 10, bottom: 10, right: 10, left: 10),
-                        child: Container(
-                          height: 150,
-                          width: 125,
-                          decoration: BoxDecoration(
-                            color: primary.withOpacity(0.25),
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const Icon(Icons.account_box_sharp, size: 85),
-                              const SizedBox(
-                                width: 30,
+            StreamBuilder<QuerySnapshot>(
+                                stream:   FirebaseFirestore.instance
+                                    .collection('Patients')
+                                    // .where('nurseId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+                                   .orderBy('dateTime', descending: true)
+                                  
+                                    .snapshots(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                                  if (snapshot.hasError) {
+                                    print(snapshot.error);
+                                    return const Center(child: Text('Error'));
+                                  }
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return const Padding(
+                                      padding: EdgeInsets.only(top: 50),
+                                      child: Center(
+                                        child: CircularProgressIndicator(
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                    );
+                                  }
+
+                                  final data = snapshot.requireData;
+                  return Expanded(
+                    child: ListView.builder(
+                      itemCount: data.docs.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                            padding: const EdgeInsets.only(
+                                top: 10, bottom: 10, right: 10, left: 10),
+                            child: Container(
+                              height: 150,
+                              width: 125,
+                              decoration: BoxDecoration(
+                                color: primary.withOpacity(0.25),
+                                borderRadius: BorderRadius.circular(15),
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  TextWidget(
-                                    text: 'John Doe',
-                                    fontSize: 14,
-                                    fontFamily: 'Bold',
-                                  ),
+                                  const Icon(Icons.account_box_sharp, size: 85),
                                   const SizedBox(
-                                    height: 5,
+                                    width: 30,
                                   ),
-                                  TextWidget(
-                                    text: 'Disease: Headache and Stress',
-                                    fontSize: 12,
-                                    fontFamily: 'Regular',
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  TextWidget(
-                                    text: 'October 25, 2023 at 5:30pm',
-                                    fontSize: 12,
-                                    fontFamily: 'Medium',
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  TextWidget(
-                                    text: 'Will start at 30 minutes',
-                                    fontSize: 12,
-                                    fontFamily: 'Medium',
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      TextWidget(
+                                        text: data.docs[index]['fname'] + ' ' + data.docs[index]['lname'],
+                                        fontSize: 14,
+                                        fontFamily: 'Bold',
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      TextWidget(
+                                        text: data.docs[index]['desc'],
+                                        fontSize: 12,
+                                        fontFamily: 'Regular',
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      TextWidget(
+                                        text: '${data.docs[index]['bday']}',
+                                        fontSize: 12,
+                                        fontFamily: 'Medium',
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                    
+                                    ],
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
-                        ));
-                  },
-                ),
+                            ));
+                      },
+                    ),
+                  );
+                }
               ),
             ],
           ),

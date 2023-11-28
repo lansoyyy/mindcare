@@ -22,6 +22,7 @@ Future addPatient
     'type': 'Nurse',
     'id': docUser.id,
     'profile': '',
+    'nurseId': '',
   };
 
   await docUser.set(json);
