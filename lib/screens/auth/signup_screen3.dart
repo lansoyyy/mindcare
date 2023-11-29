@@ -18,11 +18,16 @@ class SignupScreen3 extends StatefulWidget {
   var dateController = TextEditingController();
     var descController = TextEditingController();
 
+
+ 
+      var timeController = TextEditingController();
+
   String selectedSex = 'Male';
   String selectedGender = 'Male';
 
   SignupScreen3(
       {super.key,
+      required this.timeController,
       required this.descController,
       required this.firstnameController,
       required this.middlenameController,
@@ -143,6 +148,103 @@ class _SignupScreen3State extends State<SignupScreen3> {
                     hintColor: Colors.black,
                     controller: widget.suffixController,
                   ),
+                ),
+                 const SizedBox(
+                  height: 10,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'Time',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontFamily: 'Bold',
+                              color: primary!,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const TextSpan(
+                            text: '*',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontFamily: 'Bold',
+                              color: Colors.red,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        
+                      },
+                      child: SizedBox(
+                        width: 325,
+                        height: 50,
+                        child: TextFormField(
+                          enabled: false,
+                          style: TextStyle(
+                            fontFamily: 'Regular',
+                            fontSize: 14,
+                            color: primary,
+                          ),
+
+                          decoration: InputDecoration(
+                            hintStyle: const TextStyle(
+                              fontFamily: 'Regular',
+                              fontSize: 14,
+                              color: Colors.grey,
+                            ),
+                            hintText: widget.timeController.text,
+                            border: InputBorder.none,
+                            disabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Colors.grey,
+                              ),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Colors.grey,
+                              ),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Colors.grey,
+                              ),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Colors.red,
+                              ),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            errorStyle: const TextStyle(
+                                fontFamily: 'Bold', fontSize: 12),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Colors.red,
+                              ),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                          ),
+
+                          controller: widget.timeController,
+                          // Pass the validator to the TextFormField
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 10,
@@ -327,7 +429,7 @@ class _SignupScreen3State extends State<SignupScreen3> {
                   child: ButtonWidget(
                     label: 'Add Patient',
                     onPressed: () {
-                      addPatient(widget.firstnameController.text, widget.middlenameController.text, widget.lastnameController.text, widget.nicknameController.text, widget.suffixController.text, widget.dateController.text, widget.selectedSex, widget.selectedGender, widget.descController.text);
+                      addPatient(widget.firstnameController.text, widget.middlenameController.text, widget.lastnameController.text, widget.nicknameController.text, widget.suffixController.text, widget.dateController.text, widget.selectedSex, widget.selectedGender, widget.descController.text, widget.timeController.text);
                       showToast('Patient added!');
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => const AdminHomeScreen()));
@@ -374,4 +476,10 @@ class _SignupScreen3State extends State<SignupScreen3> {
       return null;
     }
   }
+
+
+
+
+
+ 
 }

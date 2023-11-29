@@ -24,6 +24,8 @@ class _SignupScreen2State extends State<SignupScreen2> {
   String selectedSex = 'Male'; // Default selected sex
   String selectedGender = 'Male'; // Default selected gender
     final descController = TextEditingController();
+
+     var timeController = TextEditingController();
   
 
 
@@ -303,6 +305,7 @@ class _SignupScreen2State extends State<SignupScreen2> {
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => SignupScreen3(
+                            timeController: timeController,
                             descController: descController,
                               firstnameController: firstnameController,
                               middlenameController: middlenameController,
@@ -353,6 +356,42 @@ class _SignupScreen2State extends State<SignupScreen2> {
       });
     } else {
       return null;
+    }
+  }
+  
+   void timePicker() async {
+    TimeOfDay? pickedTime = await showTimePicker(
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: primary!,
+              onPrimary: Colors.white,
+              onSurface: Colors.grey,
+            ),
+          ),
+          child: child!,
+        );
+      },
+      initialTime: TimeOfDay.now(),
+      context: context,
+    );
+
+    if (pickedTime != null) {
+      DateTime currentTime = DateTime.now();
+      DateTime selectedTime = DateTime(
+        currentTime.year,
+        currentTime.month,
+        currentTime.day,
+        pickedTime.hour,
+        pickedTime.minute,
+      );
+
+      String formattedTime = DateFormat('hh:mm a').format(selectedTime);
+
+      setState(() {
+        timeController.text = formattedTime;
+      });
     }
   }
 }

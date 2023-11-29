@@ -75,7 +75,10 @@ class NotificationsTab extends StatelessWidget {
                                   text: data.docs[index]['desc'], fontSize: 14),
                               subtitle: TextWidget(text: data.docs[index]['fname'] + ' ' + data.docs[index]['lname'], fontSize: 12),
                               trailing:
-                                  TextWidget(text: data.docs[index]['bday'], fontSize: 10),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [TextWidget(text: data.docs[index]['bday'], fontSize: 10), TextWidget(text: data.docs[index]['time'], fontSize: 10),],),
                             ),
                           );
                         },

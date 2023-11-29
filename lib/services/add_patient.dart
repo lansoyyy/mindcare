@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 Future addPatient
-(fname, mname, lname, nname, suffix, medsched,sex, gender, desc) async {
+(fname, mname, lname, nname, suffix, medsched,sex, gender, desc, time) async {
   final docUser = FirebaseFirestore.instance.collection('Patients').doc();
 
   final json = {
@@ -23,6 +23,7 @@ Future addPatient
     'id': docUser.id,
     'profile': '',
     'nurseId': '',
+    'time': time
   };
 
   await docUser.set(json);

@@ -145,6 +145,14 @@ class _AdminPatientsTabState extends State<AdminPatientsTab> {
                                               fontFamily: 'Medium',
                                             ),
                                             const SizedBox(
+                                              height: 5,
+                                            ),
+                                            TextWidget(
+                                              text: data.docs[index]['time'],
+                                              fontSize: 12,
+                                              fontFamily: 'Medium',
+                                            ),
+                                            const SizedBox(
                                               height: 10,
                                             ),
                                             i == 0

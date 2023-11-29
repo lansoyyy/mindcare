@@ -160,10 +160,9 @@ class _AdminNurseTabState extends State<AdminNurseTab> {
                                     ),
                                   ],
                                 ),
-                                trailing: const Icon(
-                                  Icons.arrow_right,
-                                  color: Colors.grey,
-                                ),
+                                trailing: IconButton( onPressed: ()  async{
+                                                           await FirebaseFirestore.instance.collection('Nurse').doc(data.docs[index].id).delete()
+;                                                        }, icon: Icon(Icons.delete,),),
                               ),
                             );
                           })),

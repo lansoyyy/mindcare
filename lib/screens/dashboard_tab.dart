@@ -136,13 +136,22 @@ class DashboardTab extends StatelessWidget {
                                                 height: 5,
                                               ),
                                               TextWidget(
-                                                text: 'Status: ${data.docs[index]['isAssigned'] ? 'Assigned' : 'Not Assigned'}',
+                                                text: '${data.docs[index]['time']}',
                                                 fontSize: 12,
                                                 fontFamily: 'Medium',
                                               ),
                                               const SizedBox(
-                                                height: 10,
+                                                height: 5,
                                               ),
+                                              TextWidget(
+                                                text: 'Status: ${data.docs[index]['isAssigned'] ? 'Assigned' : 'Not Assigned'}',
+                                                fontSize: 12,
+                                                fontFamily: 'Medium',
+                                              ),
+                                             TextButton(onPressed: () async {
+                                                await FirebaseFirestore.instance.collection('Patients').doc(data.docs[index].id).delete();
+                                             }, child: TextWidget(text: 'Delete', fontSize: 12,),),
+
                                             ],
                                           ),
                                         ],
