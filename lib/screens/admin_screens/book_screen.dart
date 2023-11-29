@@ -374,7 +374,7 @@ class _AdminBookScreenState extends State<AdminBookScreen> {
         },
         context: context,
         initialDate: DateTime.now(),
-        firstDate: DateTime(2000),
+        firstDate: DateTime(1900),
         lastDate: DateTime(2050));
 
     if (pickedDate != null) {
