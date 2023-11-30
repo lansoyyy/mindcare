@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:medzone/screens/admin_screens/home_screen.dart';
-import 'package:medzone/screens/auth/login_screen.dart';
 import 'package:medzone/services/add_patient.dart';
 import 'package:medzone/utils/colors.dart';
 import 'package:medzone/widgets/button_widget.dart';
@@ -16,11 +15,9 @@ class SignupScreen3 extends StatefulWidget {
   var nicknameController = TextEditingController();
   var suffixController = TextEditingController();
   var dateController = TextEditingController();
-    var descController = TextEditingController();
+  var descController = TextEditingController();
 
-
- 
-      var timeController = TextEditingController();
+  var timeController = TextEditingController();
 
   String selectedSex = 'Male';
   String selectedGender = 'Male';
@@ -127,7 +124,7 @@ class _SignupScreen3State extends State<SignupScreen3> {
                     controller: widget.nicknameController,
                   ),
                 ),
-                 const SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 Center(
@@ -149,102 +146,103 @@ class _SignupScreen3State extends State<SignupScreen3> {
                     controller: widget.suffixController,
                   ),
                 ),
-                 const SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'Time',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontFamily: 'Bold',
-                              color: primary!,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const TextSpan(
-                            text: '*',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontFamily: 'Bold',
-                              color: Colors.red,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        
-                      },
-                      child: SizedBox(
-                        width: 325,
-                        height: 50,
-                        child: TextFormField(
-                          enabled: false,
-                          style: TextStyle(
-                            fontFamily: 'Regular',
-                            fontSize: 14,
-                            color: primary,
-                          ),
-
-                          decoration: InputDecoration(
-                            hintStyle: const TextStyle(
-                              fontFamily: 'Regular',
-                              fontSize: 14,
-                              color: Colors.grey,
-                            ),
-                            hintText: widget.timeController.text,
-                            border: InputBorder.none,
-                            disabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Colors.grey,
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      RichText(
+                        text: const TextSpan(
+                          children: [
+                            TextSpan(
+                              text: 'Time of medicine intake',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: 'Bold',
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
                               ),
-                              borderRadius: BorderRadius.circular(5),
                             ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Colors.grey,
-                              ),
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Colors.grey,
-                              ),
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
+                            TextSpan(
+                              text: '*',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: 'Bold',
                                 color: Colors.red,
+                                fontWeight: FontWeight.bold,
                               ),
-                              borderRadius: BorderRadius.circular(5),
                             ),
-                            errorStyle: const TextStyle(
-                                fontFamily: 'Bold', fontSize: 12),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Colors.red,
-                              ),
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                          ),
-
-                          controller: widget.timeController,
-                          // Pass the validator to the TextFormField
+                          ],
                         ),
                       ),
-                    ),
-                  ],
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: SizedBox(
+                          width: 325,
+                          height: 50,
+                          child: TextFormField(
+                            enabled: false,
+                            style: TextStyle(
+                              fontFamily: 'Regular',
+                              fontSize: 14,
+                              color: primary,
+                            ),
+
+                            decoration: InputDecoration(
+                              hintStyle: const TextStyle(
+                                fontFamily: 'Regular',
+                                fontSize: 14,
+                                color: Colors.grey,
+                              ),
+                              hintText: widget.timeController.text,
+                              border: InputBorder.none,
+                              disabledBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                  color: Colors.grey,
+                                ),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                  color: Colors.grey,
+                                ),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                  color: Colors.grey,
+                                ),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                  color: Colors.red,
+                                ),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              errorStyle: const TextStyle(
+                                  fontFamily: 'Bold', fontSize: 12),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                  color: Colors.red,
+                                ),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
+
+                            controller: widget.timeController,
+                            // Pass the validator to the TextFormField
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(
                   height: 10,
@@ -429,7 +427,17 @@ class _SignupScreen3State extends State<SignupScreen3> {
                   child: ButtonWidget(
                     label: 'Add Patient',
                     onPressed: () {
-                      addPatient(widget.firstnameController.text, widget.middlenameController.text, widget.lastnameController.text, widget.nicknameController.text, widget.suffixController.text, widget.dateController.text, widget.selectedSex, widget.selectedGender, widget.descController.text, widget.timeController.text);
+                      addPatient(
+                          widget.firstnameController.text,
+                          widget.middlenameController.text,
+                          widget.lastnameController.text,
+                          widget.nicknameController.text,
+                          widget.suffixController.text,
+                          widget.dateController.text,
+                          widget.selectedSex,
+                          widget.selectedGender,
+                          widget.descController.text,
+                          widget.timeController.text);
                       showToast('Patient added!');
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => const AdminHomeScreen()));
@@ -476,10 +484,4 @@ class _SignupScreen3State extends State<SignupScreen3> {
       return null;
     }
   }
-
-
-
-
-
- 
 }

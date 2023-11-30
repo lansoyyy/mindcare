@@ -23,13 +23,9 @@ class _SignupScreen2State extends State<SignupScreen2> {
 
   String selectedSex = 'Male'; // Default selected sex
   String selectedGender = 'Male'; // Default selected gender
-    final descController = TextEditingController();
+  final descController = TextEditingController();
 
-     var timeController = TextEditingController();
-  
-
-
-
+  var timeController = TextEditingController();
 
   final List<String> sexList = ['Male', 'Female', 'Other'];
   final List<String> genderList = ['Male', 'Female', 'Non-binary', 'Other'];
@@ -237,6 +233,106 @@ class _SignupScreen2State extends State<SignupScreen2> {
                 const SizedBox(
                   height: 10,
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      RichText(
+                        text: const TextSpan(
+                          children: [
+                            TextSpan(
+                              text: 'Time of medicine intake',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: 'Bold',
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            TextSpan(
+                              text: '*',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: 'Bold',
+                                color: Colors.red,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          timePicker();
+                        },
+                        child: SizedBox(
+                          width: 325,
+                          height: 50,
+                          child: TextFormField(
+                            enabled: false,
+                            style: TextStyle(
+                              fontFamily: 'Regular',
+                              fontSize: 14,
+                              color: primary,
+                            ),
+
+                            decoration: InputDecoration(
+                              hintStyle: const TextStyle(
+                                fontFamily: 'Regular',
+                                fontSize: 14,
+                                color: Colors.grey,
+                              ),
+                              hintText: timeController.text,
+                              border: InputBorder.none,
+                              disabledBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                  color: Colors.grey,
+                                ),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                  color: Colors.grey,
+                                ),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                  color: Colors.grey,
+                                ),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                  color: Colors.red,
+                                ),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              errorStyle: const TextStyle(
+                                  fontFamily: 'Bold', fontSize: 12),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                  color: Colors.red,
+                                ),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
+
+                            controller: timeController,
+                            // Pass the validator to the TextFormField
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -305,8 +401,8 @@ class _SignupScreen2State extends State<SignupScreen2> {
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => SignupScreen3(
-                            timeController: timeController,
-                            descController: descController,
+                              timeController: timeController,
+                              descController: descController,
                               firstnameController: firstnameController,
                               middlenameController: middlenameController,
                               lastnameController: lastnameController,
@@ -358,14 +454,14 @@ class _SignupScreen2State extends State<SignupScreen2> {
       return null;
     }
   }
-  
-   void timePicker() async {
+
+  void timePicker() async {
     TimeOfDay? pickedTime = await showTimePicker(
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: ColorScheme.light(
-              primary: primary!,
+              primary: primary,
               onPrimary: Colors.white,
               onSurface: Colors.grey,
             ),
