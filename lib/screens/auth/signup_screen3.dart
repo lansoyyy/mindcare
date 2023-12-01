@@ -429,7 +429,9 @@ class _SignupScreen3State extends State<SignupScreen3> {
                     onPressed: () {
                       addPatient(
                           widget.firstnameController.text,
-                          widget.middlenameController.text,
+                          widget.middlenameController.text != ''
+                              ? widget.middlenameController.text
+                              : ' ',
                           widget.lastnameController.text,
                           widget.nicknameController.text,
                           widget.suffixController.text,

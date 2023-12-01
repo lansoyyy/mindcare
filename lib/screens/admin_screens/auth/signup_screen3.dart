@@ -379,7 +379,9 @@ class _AdminSignupScreen3State extends State<AdminSignupScreen3> {
 
       addNurse(
           widget.firstnameController.text,
-          widget.middlenameController.text,
+          widget.middlenameController.text != ''
+              ? widget.middlenameController.text
+              : ' ',
           widget.lastnameController.text,
           widget.nicknameController.text,
           widget.suffixController.text,

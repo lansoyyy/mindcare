@@ -26,6 +26,7 @@ class AdminDashboardTab extends StatelessWidget {
               showModalBottomSheet(
                 context: context,
                 builder: (context) {
+                  print(selectedDay.day);
                   return Column(
                     children: [
                       Padding(
@@ -54,7 +55,9 @@ class AdminDashboardTab extends StatelessWidget {
                           stream: FirebaseFirestore.instance
                               .collection('Patients')
                               .where('day',
-                                  isEqualTo: selectedDay.day.toString())
+                                  isEqualTo: selectedDay.day
+                                      .toString()
+                                      .padLeft(2, '0'))
                               .where('month',
                                   isEqualTo: selectedDay.month.toString())
                               .where('year',

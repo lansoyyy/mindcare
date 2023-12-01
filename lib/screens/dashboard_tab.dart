@@ -58,7 +58,9 @@ class DashboardTab extends StatelessWidget {
                                   isEqualTo:
                                       FirebaseAuth.instance.currentUser!.uid)
                               .where('day',
-                                  isEqualTo: selectedDay.day.toString())
+                                  isEqualTo: selectedDay.day
+                                      .toString()
+                                      .padLeft(2, '0'))
                               .where('month',
                                   isEqualTo: selectedDay.month.toString())
                               .where('year',
