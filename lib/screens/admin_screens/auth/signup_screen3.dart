@@ -11,9 +11,7 @@ import 'package:medzone/widgets/textfield_widget.dart';
 import 'package:medzone/widgets/toast_widget.dart';
 
 class AdminSignupScreen3 extends StatefulWidget {
-
-
-  
+  final bool to;
   var firstnameController = TextEditingController();
   var middlenameController = TextEditingController();
   var lastnameController = TextEditingController();
@@ -28,6 +26,7 @@ class AdminSignupScreen3 extends StatefulWidget {
 
   AdminSignupScreen3(
       {super.key,
+      this.to = false,
       required this.email,
       required this.password,
       required this.firstnameController,
@@ -175,7 +174,9 @@ class _AdminSignupScreen3State extends State<AdminSignupScreen3> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          dateFromPicker(context);
+                          if (!widget.to) {
+                            dateFromPicker(context);
+                          }
                         },
                         child: SizedBox(
                           width: 325,
@@ -307,25 +308,29 @@ class _AdminSignupScreen3State extends State<AdminSignupScreen3> {
                 const SizedBox(
                   height: 20,
                 ),
-                Center(
-                  child: ButtonWidget(
-                    label: 'Go back and edit',
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ),
+                !widget.to
+                    ? Center(
+                        child: ButtonWidget(
+                          label: 'Go back and edit',
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                      )
+                    : const SizedBox(),
                 const SizedBox(
                   height: 20,
                 ),
-                Center(
-                  child: ButtonWidget(
-                    label: 'Signup',
-                    onPressed: () {
-                   register(context);
-                    },
-                  ),
-                ),
+                !widget.to
+                    ? Center(
+                        child: ButtonWidget(
+                          label: 'Signup',
+                          onPressed: () {
+                            register(context);
+                          },
+                        ),
+                      )
+                    : const SizedBox(),
                 const SizedBox(
                   height: 50,
                 ),
@@ -367,14 +372,22 @@ class _AdminSignupScreen3State extends State<AdminSignupScreen3> {
     }
   }
 
-
   register(context) async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      final user = await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: widget.email, password: widget.password);
 
-      addNurse(widget.firstnameController.text, widget.middlenameController.text, widget.lastnameController.text, widget.nicknameController.text, widget.suffixController.text, widget.dateController.text, widget.selectedSex, widget.selectedGender, widget.email);
-      
+      addNurse(
+          widget.firstnameController.text,
+          widget.middlenameController.text,
+          widget.lastnameController.text,
+          widget.nicknameController.text,
+          widget.suffixController.text,
+          widget.dateController.text,
+          widget.selectedSex,
+          widget.selectedGender,
+          widget.email,
+          user.user!.uid);
 
       showToast('Account created succesfully!');
       Navigator.of(context).pushReplacement(

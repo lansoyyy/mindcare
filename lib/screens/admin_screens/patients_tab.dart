@@ -137,7 +137,7 @@ class _AdminPatientsTabState extends State<AdminPatientsTab> {
                                               ),
                                               TextWidget(
                                                 text:
-                                                    '"${data.docs[index1]['desc']}',
+                                                    '"${data.docs[index1]['desc']}"',
                                                 fontSize: 12,
                                                 fontFamily: 'Regular',
                                               ),
@@ -283,7 +283,7 @@ class _AdminPatientsTabState extends State<AdminPatientsTab> {
                                                                                             onPressed: () async {
                                                                                               await FirebaseFirestore.instance.collection('Patients').doc(data.docs[index1].id).update({
                                                                                                 'isAssigned': true,
-                                                                                                'nurseId': nursedata.docs[index].id
+                                                                                                'nurseId': nursedata.docs[index]['id']
                                                                                               });
 
                                                                                               Navigator.pop(context);

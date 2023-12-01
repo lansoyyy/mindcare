@@ -50,108 +50,118 @@ class AdminDashboardTab extends StatelessWidget {
                           ],
                         ),
                       ),
-                       StreamBuilder<QuerySnapshot>(
-                                stream:   FirebaseFirestore.instance
-                                    .collection('Patients')
-                                    .where('isAssigned', isEqualTo: true)
-                                    .where('day', isEqualTo: selectedDay.day.toString())
-                                      .where('month', isEqualTo: selectedDay.month.toString())
-                                        .where('year', isEqualTo: selectedDay.year.toString())
-                                  
-                                    .snapshots(),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                                  if (snapshot.hasError) {
-                                    print(snapshot.error);
-                                    return const Center(child: Text('Error'));
-                                  }
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return const Padding(
-                                      padding: EdgeInsets.only(top: 50),
-                                      child: Center(
-                                        child: CircularProgressIndicator(
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    );
-                                  }
+                      StreamBuilder<QuerySnapshot>(
+                          stream: FirebaseFirestore.instance
+                              .collection('Patients')
+                              .where('day',
+                                  isEqualTo: selectedDay.day.toString())
+                              .where('month',
+                                  isEqualTo: selectedDay.month.toString())
+                              .where('year',
+                                  isEqualTo: selectedDay.year.toString())
+                              .snapshots(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<QuerySnapshot> snapshot) {
+                            if (snapshot.hasError) {
+                              print(snapshot.error);
+                              return const Center(child: Text('Error'));
+                            }
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Padding(
+                                padding: EdgeInsets.only(top: 50),
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              );
+                            }
 
-                                  final data = snapshot.requireData;
-                          return SizedBox(
-                            height: 300,
-                            child: ListView.builder(
-                              itemCount: data.docs.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 10, bottom: 10, right: 25, left: 25),
-                                    child: Container(
-                                      height: 150,
-                                      width: 125,
-                                      decoration: BoxDecoration(
-                                        color: primary.withOpacity(0.25),
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          Icon(Icons.account_box,
-                                        size: 75,),
-                                          const SizedBox(
-                                            width: 30,
-                                          ),
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              TextWidget(
-                                                text: '${data.docs[index]['fname']} ${data.docs[index]['mname'][0].toString().toUpperCase()}. ${data.docs[index]['lname']}',
-                                                fontSize: 14,
-                                                fontFamily: 'Bold',
-                                              ),
-                                              const SizedBox(
-                                                height: 5,
-                                              ),
-                                              TextWidget(
-                                                text:
-                                                    'Description: ${data.docs[index]['desc']}',
-                                                fontSize: 12,
-                                                fontFamily: 'Regular',
-                                              ),
-                                              const SizedBox(
-                                                height: 5,
-                                              ),
-                                              TextWidget(
-                                                text: '${data.docs[index]['bday']}',
-                                                fontSize: 12,
-                                                fontFamily: 'Medium',
-                                              ),
-                                              const SizedBox(
-                                                height: 5,
-                                              ),
-                                              TextWidget(
-                                                text: 'Status: ${data.docs[index]['isAssigned'] ? 'Assigned' : 'Not Assigned'}',
-                                                fontSize: 12,
-                                                fontFamily: 'Medium',
-                                              ),
-                                              const SizedBox(
-                                                height: 10,
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ));
-                              },
-                            ),
-                          );
-                        }
-                      ),
+                            final data = snapshot.requireData;
+                            return SizedBox(
+                              height: 300,
+                              child: ListView.builder(
+                                itemCount: data.docs.length,
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 10,
+                                          bottom: 10,
+                                          right: 25,
+                                          left: 25),
+                                      child: Container(
+                                        height: 150,
+                                        width: 125,
+                                        decoration: BoxDecoration(
+                                          color: primary.withOpacity(0.25),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            const Icon(
+                                              Icons.account_box,
+                                              size: 75,
+                                            ),
+                                            const SizedBox(
+                                              width: 30,
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                TextWidget(
+                                                  text:
+                                                      '${data.docs[index]['fname']} ${data.docs[index]['mname'][0].toString().toUpperCase()}. ${data.docs[index]['lname']}',
+                                                  fontSize: 14,
+                                                  fontFamily: 'Bold',
+                                                ),
+                                                const SizedBox(
+                                                  height: 5,
+                                                ),
+                                                TextWidget(
+                                                  text:
+                                                      'Description: ${data.docs[index]['desc']}',
+                                                  fontSize: 12,
+                                                  fontFamily: 'Regular',
+                                                ),
+                                                const SizedBox(
+                                                  height: 5,
+                                                ),
+                                                TextWidget(
+                                                  text:
+                                                      '${data.docs[index]['bday']}',
+                                                  fontSize: 12,
+                                                  fontFamily: 'Medium',
+                                                ),
+                                                const SizedBox(
+                                                  height: 5,
+                                                ),
+                                                TextWidget(
+                                                  text:
+                                                      'Status: ${data.docs[index]['isAssigned'] ? 'Assigned' : 'Not Assigned'}',
+                                                  fontSize: 12,
+                                                  fontFamily: 'Medium',
+                                                ),
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ));
+                                },
+                              ),
+                            );
+                          }),
                     ],
                   );
                 },
